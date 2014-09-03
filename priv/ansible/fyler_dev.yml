@@ -1,0 +1,10 @@
+---
+- name: Development setup
+  hosts: development
+  user: vagrant
+  sudo: true
+  vars_files:
+    - group_vars/development.yml
+    - aws.yml
+  roles:
+    - postgres
