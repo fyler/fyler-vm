@@ -1,0 +1,3 @@
+- include: imagemagick.yml tags=imagemagick
+- include: pdftk.yml tags=pdftk
+- include: ghostscript.yml tags=ghostscript

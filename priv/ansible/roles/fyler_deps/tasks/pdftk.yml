@@ -1,0 +1,2 @@
+- name: Install pdftk
+  apt: pkg=pdftk state=installed

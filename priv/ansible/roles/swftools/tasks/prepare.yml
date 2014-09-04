@@ -1,0 +1,7 @@
+- name: SWFTools | Install dependencies
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - libfreetype6 
+    - libfreetype6-dev 
+    - libjpeg-dev
+    - libpng-dev

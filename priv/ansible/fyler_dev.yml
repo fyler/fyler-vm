@@ -7,4 +7,6 @@
     - group_vars/development.yml
     - aws.yml
   roles:
-    - postgres
+    - unoconv
+    - swftools
+    - fyler_deps

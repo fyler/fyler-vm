@@ -4,6 +4,9 @@ app_name: fyler
 app_path: "{{app_dir}}/{{app_name}}"
 app_server_name: _
 
+# global source dir
+source_dir: "/usr/local/src"
+build_dir: "/usr/local"
 # erlang
 erlang_version: "17.1"
 erlang_check_version: "17.1"

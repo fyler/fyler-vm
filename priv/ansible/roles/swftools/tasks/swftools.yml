@@ -1,0 +1,10 @@
+- name: SWFTools | clone
+  git: repo=git://github.com/palkan/swftools.git dest={{ source_dir }}/swftools
+
+- name: SWFTools | compile
+  command: $item chdir={{ source_dir }}/swftools creates=/usr/local/bin/pdf2swf
+  with_items:
+    - ./configure
+    - make
+    - make install
+    - make distclean

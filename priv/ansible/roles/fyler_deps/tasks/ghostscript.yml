@@ -1,0 +1,6 @@
+- name: Install Ghostscript
+  apt: pkg={{item}} state=installed
+  with_items:
+    - ghostscript
+    - libgs-dev
+    - gs-esp

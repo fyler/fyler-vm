@@ -1,0 +1,11 @@
+- name: Unoconv | Install dependencies
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - openjdk-6-jdk 
+    - libreoffice-core 
+    - libreoffice-common 
+    - libreoffice-writer 
+    - libreoffice-impress
+    - libreoffice-calc
+    - python-uno
+    - make
