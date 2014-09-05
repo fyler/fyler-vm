@@ -1,5 +1,5 @@
 - name: clone latest yasm
-  git: repo=git://github.com/yasm/yasm.git dest={{ ffmpeg_source_dir }}/yasm
+  git: repo=git://github.com/yasm/yasm.git accept_hostkey=true dest={{ ffmpeg_source_dir }}/yasm
 
 - name: compile yasm 
   command: $item chdir={{ ffmpeg_source_dir }}/yasm creates={{ ffmpeg_bin_dir }}/yasm

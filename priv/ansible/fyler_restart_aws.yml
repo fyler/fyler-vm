@@ -1,0 +1,39 @@
+---
+- name: restart all fylers
+  sudo: yes 
+  remote_user: ubuntu
+  vars_files:
+    - group_vars/production.yml
+  hosts: 
+    - aws-server
+    - aws-document-pool
+    - aws-video-pool
+  serial: 1
+  tasks:
+    - name: Check Fyler
+      sudo_user: "{{ deploy_user }}"
+      command: service fylerd ping
+      register: ping
+
+    - name: Debug ping
+      debug: 'msg="{{ ping.stdout }}"'
+
+    - name: Restart Fyler 
+      sudo_user: "{{ deploy_user }}"
+      command: service fylerd restart
+      register: restart_msg
+      when: ping.stdout == "pong"
+
+    - name: Restart Fyler 
+      sudo_user: "{{ deploy_user }}"
+      command: service fylerd start
+      register: start_msg
+      when: ping.stdout != "pong"
+
+    - name: Debug restart
+      debug: 'msg="{{restart_msg.stdout}}"'
+      when: ping.stdout == "pong"
+
+    - name: Debug start
+      debug: 'msg="{{start_msg.stdout}}"'
+      when: ping.stdout != "pong"

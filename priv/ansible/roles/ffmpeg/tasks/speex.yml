@@ -1,9 +1,13 @@
 - name: clone latest speex
-  git: repo=git://git.xiph.org/speex.git dest={{ ffmpeg_source_dir }}/speex
+  git: repo=git://git.xiph.org/speex.git accept_hostkey=true dest={{ ffmpeg_source_dir }}/speex
 
 - name: compile libspeex
   command: $item chdir={{ ffmpeg_source_dir }}/speex creates={{ ffmpeg_build }}/lib/libspeex.a
   with_items:
+    - libtoolize --force
+    - aclocal
+    - autoheader
+    - automake --force-missing --add-missing
     - autoconf -i
     - ./configure --prefix={{ ffmpeg_build }} --disable-shared
     - make

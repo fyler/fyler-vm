@@ -1,5 +1,5 @@
 - name: clone latest ffmpeg
-  git: repo=git://source.ffmpeg.org/ffmpeg.git dest={{ ffmpeg_source_dir }}/ffmpeg
+  git: repo=git://source.ffmpeg.org/ffmpeg.git accept_hostkey=true dest={{ ffmpeg_source_dir }}/ffmpeg
 
 - name: compile ffmpeg
   environment: ffmpeg_env

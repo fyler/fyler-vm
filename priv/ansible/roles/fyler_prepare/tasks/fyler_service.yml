@@ -1,0 +1,10 @@
+- name: Fyler | Create fyler service
+  action: template src=fylerd dest=/etc/init.d/fylerd mode=755
+ 
+- name: Fyler | Init service
+  command: 'update-rc.d  fylerd defaults'
+ 
+- name: Fyler | Restart fyler
+  sudo_user: "{{ deploy_user }}"
+  service: name=fylerd state=started
+  ignore_errors: True

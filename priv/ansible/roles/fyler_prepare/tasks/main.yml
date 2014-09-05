@@ -1,0 +1,5 @@
+- name: Make webapps dir
+  file: path={{app_dir}} state=directory owner={{ deploy_user }} mode="0755"
+
+- include: fyler.yml tags=fyler_install
+- include: fyler_service.yml tags=fyler_service

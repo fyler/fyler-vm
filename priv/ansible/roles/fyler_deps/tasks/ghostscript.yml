@@ -3,4 +3,3 @@
   with_items:
     - ghostscript
     - libgs-dev
-    - gs-esp

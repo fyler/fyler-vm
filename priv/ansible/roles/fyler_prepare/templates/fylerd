@@ -1,0 +1,31 @@
+### BEGIN INIT INFO
+# Provides: fylerd
+# Required-Start: $network
+# Required-Stop: $network
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Description: fylerd File processing manager
+### END INIT INFO
+#!/bin/sh
+export HOME={{ fyler_bin_path }}
+export AWS_CONFIG_FILE=/home/{{ deploy_user }}/.aws/config
+case "$1" in
+    ping)
+        {{ fyler_bin_path }}/fyler ping
+        ;;
+    start)
+        {{ fyler_bin_path }}/fyler start
+        ;;
+    stop)
+        {{ fyler_bin_path }}/fyler stop
+        ;;
+    restart)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    *)
+        echo "Usage: /etc/init.d/fylerd {ping|start|stop|restart}"
+        exit 1
+        ;;
+esac

@@ -1,0 +1,41 @@
+- name: Fyler | clone 
+  sudo_user: "{{ deploy_user }}"
+  git: repo={{ fyler_repo }} version={{ fyler_version }} accept_hostkey=true dest={{app_path}}
+  register: repo
+
+- name: Fyler | Create reltool.config
+  sudo_user: "{{ deploy_user }}"
+  template: src=reltool.config.j2 dest={{app_path}}/reltool.config
+  register: reltool
+
+- name: Fyler | Create vm.args
+  sudo_user: "{{ deploy_user }}"
+  template: src=vm.args.j2 dest={{app_path}}/files/vm.args
+  register: vmargs
+
+- name: Fyler | Create fyler config
+  sudo_user: "{{ deploy_user }}"
+  template: src=fyler.config.j2 dest={{app_path}}/apps/fyler/priv/fyler.config
+  register: appconfig
+
+- name: Fyler | release exists?
+  stat: path={{ fyler_bin_path}}/fyler
+  register: release_bin
+
+- name: Fyler | compile
+  sudo_user: "{{ deploy_user }}"
+  command: make chdir={{ app_path }}
+  when: repo.changed or appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
+  register: compiled
+
+- name: Fyler | setup db
+  sudo_user: "{{ deploy_user }}"
+  command: make db_setup chdir={{ app_path }}
+  when: compiled.changed and (fyler_role == "server")
+
+- name: Fyler | release
+  sudo_user: "{{ deploy_user }}"
+  command: make release chdir={{ app_path }}
+  when: compiled.changed or (not release_bin.stat.exists)
+  notify:
+    - restart fyler

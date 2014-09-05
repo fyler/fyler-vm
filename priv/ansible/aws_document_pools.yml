@@ -1,0 +1,23 @@
+---
+- name: EC2 document pool
+  hosts: aws-document-pool
+  sudo: yes 
+  remote_user: ubuntu
+  vars_files:
+    - group_vars/production.yml
+    - aws.yml
+  vars:
+    fyler_node_name: fyler_document_pool
+    fyler_server_name: "fyler_server@{{ hostvars['fyler.teachbase.ru']['ansible_eth0']['ipv4']['address'] }}"
+    fyler_role: pool
+    fyler_category: document
+  gather_facts: True
+  roles:
+    - common_setup
+    - deploy_user
+    - erlang
+    - aws_cli
+    - unoconv
+    - swftools
+    - fyler_deps
+    - fyler_prepare

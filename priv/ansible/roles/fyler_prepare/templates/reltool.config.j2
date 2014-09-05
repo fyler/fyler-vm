@@ -1,0 +1,48 @@
+{sys, [
+       {lib_dirs, ["apps","deps"]},
+       {rel, "fyler", "1",
+        [
+         kernel,
+         stdlib,
+         sasl,
+         crypto,
+         lager,
+         ranch,
+         cowlib,
+         cowboy,
+         mimetypes,
+         ulitos,
+         fyler
+        ]},
+       {rel, "start_clean", "",
+        [
+         kernel,
+         stdlib
+        ]},
+       {boot_rel, "fyler"},
+       {profile, embedded},
+       {excl_archive_filters, [".*"]}, % do no archive built libs
+       {excl_sys_filters, ["^bin/.*",
+                           "^erts.*/bin/(dialyzer|typer)"]},
+       {app, mnesia, [{incl_cond, exclude}]},
+       {app, wx, [{incl_cond, exclude}]},
+       {app, edoc, [{incl_cond, exclude}]},
+       {app, snmp, [{incl_cond, include}]},
+       {app, os_mon, [{incl_cond, include}]},
+       {app, gs, [{incl_cond, exclude}]},
+       {app, erl_interface, [{incl_cond, include}]},
+       {app, sasl, [{incl_cond, include}]},
+       {app, mimetypes, [{incl_cond, include}]},
+       {app, lager, [{incl_cond, include}]}
+      ]}.
+
+{target_dir, "{{ fyler_release_path }}"}.
+
+{overlay, [
+           {mkdir, "log/sasl"},
+           {copy, "files/erl", "\{\{erts_vsn\}\}/bin/erl"},
+           {copy, "files/nodetool", "\{\{erts_vsn\}\}/bin/nodetool"},
+           {copy, "files/fyler", "bin/fyler"},
+           {copy, "files/app.config", "etc/app.config"},
+           {copy, "files/vm.args", "etc/vm.args"}
+          ]}.

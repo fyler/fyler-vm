@@ -7,5 +7,6 @@
     - libreoffice-writer 
     - libreoffice-impress
     - libreoffice-calc
-    - python-uno
+    - libreoffice-script-provider-python
+    - unoconv
     - make

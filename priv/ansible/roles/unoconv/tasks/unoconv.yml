@@ -1,12 +1,3 @@
-- name: Unoconv | Clone unoconv rep
-  git: repo=https://github.com/dagwieers/unoconv.git dest=/tmp/unoconv
- 
-- name: Unoconv | Build unoconv
-  shell: 'cd /tmp/unoconv; make install'
- 
-- name: Unoconv | Cleanup
-  shell: 'rm -rf /tmp/unoconv'
- 
 - name: Unoconv | Create unoconv service
   action: template src=unoconvd dest=/etc/init.d/unoconvd mode=755
  

@@ -1,10 +1,16 @@
+- name: SWFTools | check if install
+  stat: path=/usr/local/bin/pdf2swf
+  register: st
+
 - name: SWFTools | clone
-  git: repo=git://github.com/palkan/swftools.git dest={{ source_dir }}/swftools
+  git: repo=git://github.com/palkan/swftools.git accept_hostkey=true dest={{ source_dir }}/swftools
+  register: swfrepo
 
 - name: SWFTools | compile
-  command: $item chdir={{ source_dir }}/swftools creates=/usr/local/bin/pdf2swf
+  command: $item chdir={{ source_dir }}/swftools
   with_items:
     - ./configure
     - make
     - make install
     - make distclean
+  when: st.stat.exists == false or swfrepo.changed

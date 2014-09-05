@@ -1,5 +1,5 @@
 - name: clone latest opus
-  git: repo=git://git.opus-codec.org/opus.git dest={{ ffmpeg_source_dir }}/opus
+  git: repo=git://git.opus-codec.org/opus.git accept_hostkey=true dest={{ ffmpeg_source_dir }}/opus
 
 - name: compile libopus
   command: $item chdir={{ ffmpeg_source_dir }}/opus creates={{ ffmpeg_build }}/lib/libopus.a

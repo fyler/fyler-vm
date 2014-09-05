@@ -1,0 +1,21 @@
+---
+- name: EC2 server
+  hosts: aws-server
+  sudo: yes 
+  remote_user: ubuntu
+  vars_files:
+    - group_vars/production.yml
+    - aws.yml
+  vars:
+    fyler_node_name: fyler_server
+    fyler_server_name: "fyler_server@{{ hostvars['fyler.teachbase.ru']['ansible_eth0']['ipv4']['address'] }}"
+    fyler_role: server
+    fyler_category: server
+  gather_facts: True
+  roles:
+    - common_setup
+    - deploy_user
+    - postgres
+    - erlang
+    - aws_cli
+    - fyler_prepare

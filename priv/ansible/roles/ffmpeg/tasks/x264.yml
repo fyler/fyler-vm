@@ -1,5 +1,5 @@
 - name: clone latest x264
-  git: repo=git://git.videolan.org/x264.git dest={{ ffmpeg_source_dir }}/x264
+  git: repo=git://git.videolan.org/x264.git accept_hostkey=true dest={{ ffmpeg_source_dir }}/x264
 
 - name: compile x264
   environment: ffmpeg_env

@@ -7,6 +7,10 @@
     - group_vars/development.yml
     - aws.yml
   roles:
+    - common_setup
+    - erlang
+    - aws_cli
+    - ffmpeg
     - unoconv
     - swftools
     - fyler_deps

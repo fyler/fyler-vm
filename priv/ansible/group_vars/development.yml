@@ -9,7 +9,7 @@ source_dir: "/usr/local/src"
 build_dir: "/usr/local"
 # erlang
 erlang_version: "17.1"
-erlang_check_version: "17.1"
+erlang_check_version: "17"
 erlang_url: "http://www.erlang.org/download/otp_src_{{erlang_version}}.tar.gz" 
 erlang_name: "otp_src_{{erlang_version}}"
 erlang_tmp_path: "/usr/local/src/{{erlang_name}}"
@@ -20,7 +20,7 @@ deploy_user_key: "~/.ssh/devtb_rsa.pub"
 
 #postgres
 app_db_host: localhost
-app_db_user_pass: $6$rounds=100000$/MoO0gcoRzT2OVfH$JEYj307JqPJIRWTFgOV94w9bNNGLmZ6AlEZVH3N5kG0IAchZwQBqYDmYLBgAXQ7kXKNsBbf9SMrSrHLqcga3a0
+app_db_user_pass: md5dd2dc732b6283bf8584477d9189696f2
 app_db_user: fyler
 
 pg_db: fyler
@@ -34,5 +34,4 @@ ffmpeg_build: "/usr/local/ffmpeg_build"
 ffmpeg_bin_dir: "/usr/local/bin"
 ffmpeg_env: 
   PKG_CONFIG_PATH: "{{ffmpeg_build}}/lib/pkgconfig"
-ffmpeg_flags: --extra-cflags="-I{{ ffmpeg_build }}/include" --extra-ldflags="-L{{ ffmpeg_build }}/lib" --bindir="{{ ffmpeg_bin_dir}}" --extra-libs=-ldl --enable-gpl --enable-libass --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libspeex --enable-nonfree
-
+ffmpeg_flags: "--extra-cflags=\"-I{{ ffmpeg_build }}/include\" --extra-ldflags=\"-L{{ ffmpeg_build }}/lib\" --bindir=\"{{ ffmpeg_bin_dir}}\" --extra-libs=-ldl --enable-gpl --enable-libass --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libspeex --enable-nonfree"
