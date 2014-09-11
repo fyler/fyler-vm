@@ -2,7 +2,7 @@
   git: repo=git://github.com/mstorsjo/fdk-aac.git accept_hostkey=true dest={{ ffmpeg_source_dir }}/fdk-aac
 
 - name: compile fdk-aac
-  command: $item chdir={{ ffmpeg_source_dir }}/fdk-aac creates={{ ffmpeg_build }}/lib/libfdk-aac.a
+  shell: 'cd {{ ffmpeg_source_dir }}/fdk-aac; {{ item }} creates={{ ffmpeg_build }}/lib/libfdk-aac.a'
   with_items:
     - autoreconf -fiv
     - ./configure --prefix={{ ffmpeg_build }} --disable-shared

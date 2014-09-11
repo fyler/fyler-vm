@@ -3,7 +3,7 @@
 
 - name: compile libvpx
   environment: ffmpeg_env
-  command: $item chdir={{ ffmpeg_source_dir }}/libvpx creates={{ ffmpeg_build }}/lib/libvpx.a
+  shell: 'cd {{ ffmpeg_source_dir }}/libvpx; {{ item }} creates={{ ffmpeg_build }}/lib/libvpx.a'
   with_items:
     - ./configure --prefix={{ ffmpeg_build }} --disable-shared
     - make
