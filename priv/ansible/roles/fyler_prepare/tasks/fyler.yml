@@ -22,9 +22,12 @@
   stat: path={{ fyler_bin_path}}/fyler
   register: release_bin
 
+- name: Fyler | deps
+  command: make deps_{{ fyler_compile_type }}
+
 - name: Fyler | compile
   sudo_user: "{{ deploy_user }}"
-  command: make chdir={{ app_path }}
+  command: make compile_{{ fyler_compile_type }} chdir={{ app_path }}
   when: repo.changed or appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: compiled
 
