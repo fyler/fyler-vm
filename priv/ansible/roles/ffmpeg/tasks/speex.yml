@@ -4,11 +4,7 @@
 - name: compile libspeex
   shell: 'cd {{ ffmpeg_source_dir }}/speex; {{ item }} creates={{ ffmpeg_build }}/lib/libspeex.a'
   with_items:
-    - libtoolize --force
-    - aclocal
-    - autoheader
-    - automake --force-missing --add-missing
-    - autoconf -i
+    - autogen.sh
     - ./configure --prefix={{ ffmpeg_build }} --disable-shared
     - make
     - make install
