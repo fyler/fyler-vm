@@ -11,7 +11,6 @@
     fyler_server_name: "fyler_server@{{ hostvars['fyler.teachbase.ru']['ansible_eth0']['ipv4']['address'] }}"
     fyler_role: pool
     fyler_category: video
-    fyler_compile_type: pool_video
   gather_facts: True
   roles:
     - common_setup
