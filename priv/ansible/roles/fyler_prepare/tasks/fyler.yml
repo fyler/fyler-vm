@@ -28,8 +28,39 @@
   when: repo.changed or appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
+- name: Fyler | get deps
+  sudo_user: "{{ deploy_user }}"
+  command: make deps_server chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "server")
+
+- name: Fyler | update deps
+  sudo_user: "{{ deploy_user }}"
+  command: make update_deps_server chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "server")
+
+- name: Fyler | get deps
+  sudo_user: "{{ deploy_user }}"
+  command: make deps_pool_document chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "document")
+
+- name: Fyler | update deps
+  sudo_user: "{{ deploy_user }}"
+  command: make update_deps_pool_document chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "document")
+
+- name: Fyler | get deps
+  sudo_user: "{{ deploy_user }}"
+  command: make deps_pool_video chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "video")
+
+- name: Fyler | update deps
+  sudo_user: "{{ deploy_user }}"
+  command: make update_deps_pool_video chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "video")
+
 - name: Fyler | compile
   sudo_user: "{{ deploy_user }}"
+  environment: ffmpeg_env
   command: make chdir={{ app_path }}
   when: cleaned.changed
   register: compiled
