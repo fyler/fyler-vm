@@ -22,10 +22,16 @@
   stat: path={{ fyler_bin_path}}/fyler
   register: release_bin
 
+- name: Fyler | clean
+  sudo_user: "{{ deploy_user }}"
+  command: make clean chdir={{ app_path }}
+  when: repo.changed or appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
+  register: cleaned
+
 - name: Fyler | compile
   sudo_user: "{{ deploy_user }}"
   command: make chdir={{ app_path }}
-  when: repo.changed or appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
+  when: cleaned.changed
   register: compiled
 
 - name: Fyler | setup db

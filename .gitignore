@@ -2,6 +2,9 @@
 .vagrant/
 fyler/
 
+*.sublime-project
+*.sublime-workspace
+
 # production files
 
 priv/ansible/group_vars/production.yml
