@@ -18,6 +18,11 @@
   template: src=fyler.config.j2 dest={{app_path}}/apps/fyler/priv/fyler.config
   register: appconfig
 
+- name: Fyler | Create app config
+  sudo_user: "{{ deploy_user }}"
+  template: src=app.config.j2 dest={{app_path}}/files/app.config
+  register: main_appconfig
+
 - name: Fyler | release exists?
   stat: path={{ fyler_bin_path}}/fyler
   register: release_bin
@@ -25,7 +30,7 @@
 - name: Fyler | clean
   sudo_user: "{{ deploy_user }}"
   command: make clean chdir={{ app_path }}
-  when: repo.changed or appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
+  when: repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
 - name: Fyler | get deps
