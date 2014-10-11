@@ -33,42 +33,30 @@
   when: repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
-- name: Fyler | get deps
-  sudo_user: "{{ deploy_user }}"
-  command: make deps_server chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "server")
-
-- name: Fyler | update deps
+- name: Fyler | update deps (server)
   sudo_user: "{{ deploy_user }}"
   command: make update_deps_server chdir={{ app_path }}
   when: cleaned.changed and (fyler_role == "server")
 
-- name: Fyler | get deps
+- name: Fyler | update deps (pool)
   sudo_user: "{{ deploy_user }}"
-  command: make deps_pool_document chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "document")
+  command: make update_deps_pool_{{ fyler_category }} chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "pool")
 
-- name: Fyler | update deps
-  sudo_user: "{{ deploy_user }}"
-  command: make update_deps_pool_document chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "document")
-
-- name: Fyler | get deps
-  sudo_user: "{{ deploy_user }}"
-  command: make deps_pool_video chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "video")
-
-- name: Fyler | update deps
-  sudo_user: "{{ deploy_user }}"
-  command: make update_deps_pool_video chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "pool") and (fyler_category == "video")
-
-- name: Fyler | compile
+- name: Fyler | compile (server)
   sudo_user: "{{ deploy_user }}"
   environment: ffmpeg_env
-  command: make chdir={{ app_path }}
-  when: cleaned.changed
+  command: make compile_server chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "server")
   register: compiled
+
+- name: Fyler | compile (pool)
+  sudo_user: "{{ deploy_user }}"
+  environment: ffmpeg_env
+  command: make compile_pool_{{ fyler_category }} chdir={{ app_path }}
+  when: cleaned.changed and (fyler_role == "pool")
+  register: compiled
+
 
 - name: Fyler | setup db
   sudo_user: "{{ deploy_user }}"
@@ -77,7 +65,7 @@
 
 - name: Fyler | release
   sudo_user: "{{ deploy_user }}"
-  command: make release chdir={{ app_path }}
+  command: make soft-release chdir={{ app_path }}
   when: compiled.changed or (not release_bin.stat.exists)
   notify:
     - restart fyler
