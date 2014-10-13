@@ -3,6 +3,16 @@
   git: repo={{ fyler_repo }} version={{ fyler_version }} accept_hostkey=true dest={{app_path}}
   register: repo
 
+- name: Fyler | copy rebar.config (server)
+  sudo_user: "{{ deploy_user }}"
+  command: cp rebar_server.config rebar.config chdir={{ app_path }}
+  when: repo.chagned and (fyler_role == "server")
+
+- name: Fyler | copy rebar.config (pool)
+  sudo_user: "{{ deploy_user }}"
+  command: cp rebar_pool_{{ fyler_category }}.config rebar.config chdir={{ app_path }}
+  when: repo.chagned and (fyler_role == "pool")
+
 - name: Fyler | Create reltool.config
   sudo_user: "{{ deploy_user }}"
   template: src=reltool.config.j2 dest={{app_path}}/reltool.config
@@ -30,33 +40,14 @@
 - name: Fyler | clean
   sudo_user: "{{ deploy_user }}"
   command: make clean chdir={{ app_path }}
-  when: repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
+  when: fyler_force_clean or repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
-- name: Fyler | update deps (server)
+- name: Fyler | update deps and compile
   sudo_user: "{{ deploy_user }}"
-  command: make update_deps_server chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "server")
-
-- name: Fyler | update deps (pool)
-  sudo_user: "{{ deploy_user }}"
-  command: make update_deps_pool_{{ fyler_category }} chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "pool")
-
-- name: Fyler | compile (server)
-  sudo_user: "{{ deploy_user }}"
-  environment: ffmpeg_env
-  command: make compile_server chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "server")
+  command: make chdir={{ app_path }}
+  when: cleaned.changed
   register: compiled
-
-- name: Fyler | compile (pool)
-  sudo_user: "{{ deploy_user }}"
-  environment: ffmpeg_env
-  command: make compile_pool_{{ fyler_category }} chdir={{ app_path }}
-  when: cleaned.changed and (fyler_role == "pool")
-  register: compiled
-
 
 - name: Fyler | setup db
   sudo_user: "{{ deploy_user }}"

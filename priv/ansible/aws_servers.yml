@@ -11,6 +11,7 @@
     fyler_server_name: "fyler_server@{{ hostvars['fyler.teachbase.ru']['ansible_eth0']['ipv4']['address'] }}"
     fyler_role: server
     fyler_category: server
+    fyler_force_clean: false
   gather_facts: True
   roles:
     - common_setup

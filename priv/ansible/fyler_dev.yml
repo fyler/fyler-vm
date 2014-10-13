@@ -6,6 +6,8 @@
   vars_files:
     - group_vars/development.yml
     - aws.yml
+  vars:
+    fyler_force_clean: false
   roles:
     - common_setup
     - erlang
