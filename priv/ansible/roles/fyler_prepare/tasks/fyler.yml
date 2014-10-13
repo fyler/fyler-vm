@@ -6,12 +6,12 @@
 - name: Fyler | copy rebar.config (server)
   sudo_user: "{{ deploy_user }}"
   command: cp rebar_server.config rebar.config chdir={{ app_path }}
-  when: repo.chagned and (fyler_role == "server")
+  when: (repo.changed or fyler_force_clean) and (fyler_role == "server")
 
 - name: Fyler | copy rebar.config (pool)
   sudo_user: "{{ deploy_user }}"
   command: cp rebar_pool_{{ fyler_category }}.config rebar.config chdir={{ app_path }}
-  when: repo.chagned and (fyler_role == "pool")
+  when: (repo.changed or fyler_force_clean) and (fyler_role == "pool")
 
 - name: Fyler | Create reltool.config
   sudo_user: "{{ deploy_user }}"
@@ -45,6 +45,7 @@
 
 - name: Fyler | update deps and compile
   sudo_user: "{{ deploy_user }}"
+  environment: ffmpeg_env
   command: make chdir={{ app_path }}
   when: cleaned.changed
   register: compiled
