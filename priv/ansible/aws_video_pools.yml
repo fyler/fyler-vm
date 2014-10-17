@@ -14,10 +14,10 @@
     fyler_force_clean: false
   gather_facts: True
   roles:
-    - common_setup
-    - deploy_user
-    - erlang
-    - aws_cli
-    - fyler_deps
-    - ffmpeg
-    - fyler_prepare
+    - { role: common_setup, tags: ['initial'] }
+    - { role: deploy_user, tags: ['user'] }
+    - { role: erlang, tags: ['erlang'] }
+    - { role: aws_cli, tags: ['aws_cli'] }
+    - { role: fyler_deps, tags: ['fyler_deps'] }
+    - { role: ffmpeg, tags: ['ffmpeg'] }
+    - { role: fyler_prepare, tags: ['app_setup'] }

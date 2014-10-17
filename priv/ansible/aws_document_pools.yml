@@ -14,11 +14,11 @@
     fyler_force_clean: false
   gather_facts: True
   roles:
-    - common_setup
-    - deploy_user
-    - erlang
-    - aws_cli
-    - unoconv
-    - swftools
-    - fyler_deps
-    - fyler_prepare
+    - { role: common_setup, tags: ['initial'] }
+    - { role: deploy_user, tags: ['user'] }
+    - { role: erlang, tags: ['erlang'] }
+    - { role: aws_cli, tags: ['aws_cli'] }
+    - { role: unoconv, tags: ['unoconv'] }
+    - { role: swftools, tags: ['swftools'] }
+    - { role: fyler_deps, tags: ['fyler_deps'] }
+    - { role: fyler_prepare, tags: ['app_setup'] }

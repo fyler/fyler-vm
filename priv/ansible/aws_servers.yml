@@ -14,9 +14,9 @@
     fyler_force_clean: false
   gather_facts: True
   roles:
-    - common_setup
-    - deploy_user
-    - postgres
-    - erlang
-    - aws_cli
-    - fyler_prepare
+    - { role: common_setup, tags: ['initial'] }
+    - { role: deploy_user, tags: ['user'] }
+    - { role: postgres, tags: ['postgres'] }
+    - { role: erlang, tags: ['erlang'] }
+    - { role: aws_cli, tags: ['aws_cli'] }
+    - { role: fyler_prepare, tags: ['app_setup'] }
