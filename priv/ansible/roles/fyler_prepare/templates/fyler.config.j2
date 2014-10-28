@@ -16,3 +16,6 @@
 {pg_pass,"{{ app_db_pass_plain }}"}.
 {pg_pool_size, 5}.
 {pg_max_overflow, 10}.
+
+{instances, #{document => #{instances => [ {{ fyler_doc_instances }} ]},
+              video => #{instances => [ {{ fyler_video_instances }} ]}}}.

@@ -1,9 +1,13 @@
 - name: Fyler | Create fyler service
   action: template src=fylerd dest=/etc/init.d/fylerd mode=755
- 
-- name: Fyler | Init service
-  command: 'update-rc.d  fylerd defaults'
- 
+
+- name: Fyler | Remove old service links
+  command: 'update-rc.d -f fylerd remove'
+
+- name: Fyler | Setup cron reboot task to start fylerd
+  sudo_user: "{{ deploy_user }}"
+  cron: name="start fyler" special_time=reboot job="service fylerd start"
+
 - name: Fyler | Restart fyler
   sudo_user: "{{ deploy_user }}"
   service: name=fylerd state=started

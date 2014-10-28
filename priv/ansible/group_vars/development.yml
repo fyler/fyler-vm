@@ -28,6 +28,9 @@ pg_db: fyler
 db_ram_shared: 512
 db_ram_cache: 256
 
+fyler_doc_instances: ''
+fyler_video_instances: ''
+
 # ffmpeg params
 ffmpeg_source_dir: "/usr/local/src"
 ffmpeg_build: "/usr/local/ffmpeg_build"
