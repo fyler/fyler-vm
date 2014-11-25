@@ -14,22 +14,15 @@ erlang_url: "http://www.erlang.org/download/otp_src_{{erlang_version}}.tar.gz"
 erlang_name: "otp_src_{{erlang_version}}"
 erlang_tmp_path: "/usr/local/src/{{erlang_name}}"
 
-# deploy params
-deploy_user: vagrant
-deploy_user_key: "~/.ssh/devtb_rsa.pub"
-
 #postgres
 app_db_host: localhost
-app_db_user_pass: md5dd2dc732b6283bf8584477d9189696f2
 app_db_user: fyler
+app_db_pass_plain: fyler
 
 pg_db: fyler
 
 db_ram_shared: 512
 db_ram_cache: 256
-
-fyler_doc_instances: ''
-fyler_video_instances: ''
 
 # ffmpeg params
 ffmpeg_source_dir: "/usr/local/src"
@@ -38,5 +31,29 @@ ffmpeg_bin_dir: "/usr/local/bin"
 ffmpeg_env: 
   PKG_CONFIG_PATH: "{{ffmpeg_build}}/lib/pkgconfig"
 ffmpeg_flags: "--extra-cflags=\"-I{{ ffmpeg_build }}/include\" --extra-ldflags=\"-L{{ ffmpeg_build }}/lib\" --bindir=\"{{ ffmpeg_bin_dir}}\" --extra-libs=-ldl --enable-gpl --enable-libass --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libspeex --enable-nonfree"
+
+# deploy params
+deploy_user: vagrant
+deploy_user_key: "~/.ssh/devtb_rsa.pub"
+
+# fyler
+fyler_repo: git://github.com/fyler/fyler.git
+fyler_version: master
+fyler_release_path: "{{app_dir}}/fyler_release"
+fyler_bin_path: "/webapps/fyler_release/bin"
+fyler_cookie: "fookie"
+
+fyler_storage_dir: "{{app_dir}}/tmp"
+fyler_http_port: 8008
+fyler_aws_bucket: "[\"tbconvert\"]"
+fyler_aws_dir: "fyler_v1"
+fyler_api_pass: 098f6bcd4621d373cade4e832627b4f6 # test
+fyler_api_login: test
+
+fyler_cpu_high_wm: 75
+fyler_cpu_check: 3000
+
+fyler_doc_instances: ""
+fyler_video_instances: ""
 
 honeybadger_api_key: ""
