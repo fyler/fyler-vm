@@ -1,3 +1,10 @@
+- name: install 7zip 
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - p7zip-full
+    - unrar-free
+  when: fyler_category == "document"
+
 - include: imagemagick.yml tags=imagemagick
 - include: pdftk.yml tags=pdftk
 - include: ghostscript.yml tags=ghostscript
