@@ -1,12 +1,15 @@
 Vagrant.configure("2") do |config|
 
-  config.vm.box       = "precise64"
-  config.vm.box_url   = "http://files.vagrantup.com/precise64.box"
+  config.vm.box       = "ubuntu/trusty64"
+  config.vm.box_url   = "https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "priv/ansible/fyler_dev.yml"
     ansible.inventory_path = "priv/ansible/dev_hosts"
-    ansible.verbose = 'vv'
+    ansible.tags = ENV["TAGS"]
+    ansible.skip_tags = ENV["SKIP_TAGS"]
+    ansible.verbose = 'v'
+    ansible.limit = "all" 
   end
 
   config.vm.network :forwarded_port, host: 2203, guest: 22 

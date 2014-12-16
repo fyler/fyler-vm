@@ -1,0 +1,7 @@
+#postgres
+app_db_host: localhost
+app_db_user: fyler
+app_db_pass_plain: fyler
+
+# deploy params
+deploy_user: vagrant

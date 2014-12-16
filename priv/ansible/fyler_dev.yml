@@ -4,15 +4,16 @@
   user: vagrant
   sudo: true
   vars_files:
-    - group_vars/development.yml
     - aws.yml
   vars:
     fyler_force_clean: false
+    fyler_category: document
   roles:
-    - common_setup
-    - erlang
-    - aws_cli
-    - ffmpeg
-    - unoconv
-    - swftools
-    - fyler_deps
+    - { role: common_setup, tags: ['initial'] }
+    - { role: postgres, tags: ['postgres'] }
+    - { role: erlang, tags: ['erlang'] }
+    - { role: aws_cli, tags: ['aws_cli'] }
+    - { role: unoconv, tags: ['unoconv'] }
+    - { role: ffmpeg, tags: ['ffmpeg'] }
+    - { role: swftools, tags: ['swftools'] }
+    - { role: fyler_deps, tags: ['fyler_deps'] }

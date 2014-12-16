@@ -4,7 +4,6 @@
   sudo: yes 
   remote_user: ubuntu
   vars_files:
-    - group_vars/production.yml
     - aws.yml
   vars:
     fyler_node_name: fyler_server

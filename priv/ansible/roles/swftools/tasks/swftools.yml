@@ -7,7 +7,7 @@
   register: swfrepo
 
 - name: SWFTools | compile
-  command: $item chdir={{ source_dir }}/swftools
+  command: '{{ item }} chdir={{ source_dir }}/swftools'
   with_items:
     - ./configure
     - make

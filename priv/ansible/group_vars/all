@@ -4,22 +4,18 @@ app_name: fyler
 app_path: "{{app_dir}}/{{app_name}}"
 app_server_name: _
 
+pg_db: fyler
+
 # global source dir
 source_dir: "/usr/local/src"
 build_dir: "/usr/local"
 # erlang
-erlang_version: "17.1"
+erlang_version: "17.3"
 erlang_check_version: "17"
 erlang_url: "http://www.erlang.org/download/otp_src_{{erlang_version}}.tar.gz" 
 erlang_name: "otp_src_{{erlang_version}}"
 erlang_tmp_path: "/usr/local/src/{{erlang_name}}"
 
-#postgres
-app_db_host: localhost
-app_db_user: fyler
-app_db_pass_plain: fyler
-
-pg_db: fyler
 
 db_ram_shared: 512
 db_ram_cache: 256
@@ -31,10 +27,6 @@ ffmpeg_bin_dir: "/usr/local/bin"
 ffmpeg_env: 
   PKG_CONFIG_PATH: "{{ffmpeg_build}}/lib/pkgconfig"
 ffmpeg_flags: "--extra-cflags=\"-I{{ ffmpeg_build }}/include\" --extra-ldflags=\"-L{{ ffmpeg_build }}/lib\" --bindir=\"{{ ffmpeg_bin_dir}}\" --extra-libs=-ldl --enable-gpl --enable-libass --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libspeex --enable-nonfree"
-
-# deploy params
-deploy_user: vagrant
-deploy_user_key: "~/.ssh/devtb_rsa.pub"
 
 # fyler
 fyler_repo: git://github.com/fyler/fyler.git

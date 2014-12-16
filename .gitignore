@@ -7,7 +7,5 @@ fyler/
 
 # production files
 
-priv/ansible/group_vars/production.yml
-priv/ansible/fyler_aws.yml
+priv/ansible/group_vars/production*
 priv/ansible/aws.yml
-priv/ansible/aws_hosts
