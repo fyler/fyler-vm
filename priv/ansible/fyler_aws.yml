@@ -1,0 +1,3 @@
+- include: aws_servers.yml tags=fyler_server
+- include: aws_document_pools.yml tags=fyler_pool,fyler_doc_pool
+- include: aws_video_pools.yml tags=fyler_pool,fyler_video_pool
