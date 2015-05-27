@@ -2,13 +2,10 @@
 fyler.teachbase.ru ansible_ssh_private_key_file=/Users/palkan/.ssh/fyler.pem
 
 [aws-document-pool]
-54.77.221.208 ansible_ssh_private_key_file=/Users/palkan/.ssh/fyler.pem
 
 [aws-video-pool]
-54.77.196.57 ansible_ssh_private_key_file=/Users/palkan/.ssh/fyler.pem
-54.77.210.105 ansible_ssh_private_key_file=/Users/palkan/.ssh/fyler.pem
 
-[prodution:children]
+[production:children]
 aws-server
 aws-document-pool
 aws-video-pool

@@ -43,10 +43,23 @@
   when: fyler_force_clean or repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
-- name: Fyler | update deps and compile
+- name: Fyler | update deps
   sudo_user: "{{ deploy_user }}"
   environment: ffmpeg_env
-  command: make chdir={{ app_path }}
+  command: make update_deps chdir={{ app_path }}
+  when: cleaned.changed
+  register: compiled
+
+- name: Fyler | update cowlib
+  sudo_user: "{{ deploy_user }}"
+  command: "{{ app_path }}/rebar update-deps apps=cowlib"
+  args:
+    chdir: "{{app_path}}"
+
+- name: Fyler | compile
+  sudo_user: "{{ deploy_user }}"
+  environment: ffmpeg_env
+  command: make compile chdir={{ app_path }}
   when: cleaned.changed
   register: compiled
 
