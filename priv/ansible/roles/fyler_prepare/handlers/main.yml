@@ -1,3 +1,4 @@
 - name: restart fyler
   sudo_user: "{{ deploy_user }}"
   service: name=fylerd state=restarted
+  when: fyler_start_service

@@ -11,4 +11,5 @@
 - name: Fyler | Restart fyler
   sudo_user: "{{ deploy_user }}"
   service: name=fylerd state=started
+  when: fyler_start_service
   ignore_errors: True

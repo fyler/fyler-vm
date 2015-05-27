@@ -48,4 +48,6 @@ fyler_cpu_check: 3000
 fyler_doc_instances: ""
 fyler_video_instances: ""
 
+fyler_start_service: True
+
 honeybadger_api_key: ""
