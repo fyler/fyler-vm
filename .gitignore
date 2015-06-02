@@ -9,3 +9,4 @@ fyler/
 
 priv/ansible/group_vars/production*
 priv/ansible/aws.yml
+priv/ansible/_*

@@ -9,12 +9,12 @@
 {auth_login,"{{ fyler_api_login }}"}.
 {cpu_high_watermark, {{ fyler_cpu_high_wm }}}.
 {cpu_check_timeout, {{ fyler_cpu_check }}}.
-
+{max_active, {{ fyler_max_active }}}.
 {pg_host,"{{ app_db_host }}" }.
 {pg_db,"{{ pg_db }}"}.
 {pg_user,"{{ app_db_user }}"}.
 {pg_pass,"{{ app_db_pass_plain }}"}.
 {pg_pool_size, 5}.
 {pg_max_overflow, 10}.
-{video, #{instances => [ {{ fyler_video_instances }} ]}}.
+{video, #{instances => [ {{ fyler_video_instances }} ], priorities => #{low => 5, high => 1}}}.
 {document, #{instances => [ {{ fyler_doc_instances }} ]}}.

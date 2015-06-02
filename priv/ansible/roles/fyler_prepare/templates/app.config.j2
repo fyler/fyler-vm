@@ -4,9 +4,7 @@
     {inet_dist_listen_max, 9115}
   ]},
   {sasl, [{sasl_error_logger, false}]},
-  {fyler, [
-    {priorities, #{video => #{low => 5, high => 1}}}
-  ]},
+  {fyler, []},
   {lager, [
     {handlers, [
       {lager_console_backend, debug},
@@ -15,6 +13,14 @@
       {lager_file_backend, [{file, "log/debug.log"}, {level, debug}, {size, 524288}, {date, "$D0"}, {count, 5}]},
       {lager_file_backend, [{file, "log/warning.log"}, {level, warning}, {size, 10485760}, {date, "$D0"}, {count, 5}]},
       {lager_honeybadger_backend, [{api_key, "{{ honeybadger_api_key }}"}]}
+{% if logstash_host is defined and logstash_port is defined %}
+      ,{lager_logstash_backend, [
+          {level, info},
+          {logstash_host, "{{ logstash_host }}"},
+          {logstash_port, {{ logstash_port }} },
+          {node_role, {{ fyler_role }}}
+        ]}
+{% endif %}
     ]},
     {crash_log, "log/crash.log"},
     {crash_log_msg_size, 65536},

@@ -10,6 +10,7 @@
     fyler_server_name: "fyler_server@{{ hostvars['fyler.teachbase.ru']['ansible_eth0']['ipv4']['address'] }}"
     fyler_role: pool
     fyler_category: document
+    fyler_max_active: 5
     fyler_force_clean: false
   gather_facts: True
   roles:
