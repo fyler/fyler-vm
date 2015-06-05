@@ -1,0 +1,20 @@
+---
+- name: stop all fylers
+  sudo: yes 
+  remote_user: ubuntu
+  hosts: 
+    - aws-server
+    - aws-document-pool
+    - aws-video-pool
+  tasks:
+    - name: Check Fyler
+      sudo_user: "{{ deploy_user }}"
+      command: service fylerd ping
+      register: ping
+
+    - name: Debug ping
+      debug: 'msg="{{ ping.stdout }}"'
+
+    - name: Stop Fyler 
+      sudo_user: "{{ deploy_user }}"
+      command: service fylerd stop
