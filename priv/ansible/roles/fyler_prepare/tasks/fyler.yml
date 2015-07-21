@@ -1,6 +1,10 @@
 - name: Fyler | clone 
   sudo_user: "{{ deploy_user }}"
-  git: repo={{ fyler_repo }} version={{ fyler_version }} accept_hostkey=true dest={{app_path}}
+  git: repo={{ fyler_repo }}
+       version={{ fyler_version }}
+       accept_hostkey=true
+       dest={{app_path}}
+       force=true
   register: repo
 
 - name: Fyler | copy rebar.config (server)
