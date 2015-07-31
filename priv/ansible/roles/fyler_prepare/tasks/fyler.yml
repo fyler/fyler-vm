@@ -53,6 +53,11 @@
   when: fyler_force_clean or repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
+- name: Fyler | remove deps
+  sudo_user: "{{ deploy_user }}"
+  file: path={{ app_path }}/deps state=absent
+  when: fyler_force_clean
+
 - name: Fyler | update deps and compile
   sudo_user: "{{ deploy_user }}"
   environment: ffmpeg_env
