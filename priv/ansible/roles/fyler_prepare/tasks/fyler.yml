@@ -64,6 +64,7 @@
   command: make {{ item }} chdir={{ app_path }}
   when: cleaned.changed
   with_items:
+    - get-lager
     - get-deps
     - update-deps
     - compile
