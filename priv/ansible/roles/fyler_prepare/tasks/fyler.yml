@@ -7,31 +7,37 @@
   sudo_user: "{{ deploy_user }}"
   command: cp rebar_server.config rebar.config chdir={{ app_path }}
   when: (repo.changed or fyler_force_clean) and (fyler_role == "server")
+  tags: fyler_release
 
 - name: Fyler | copy rebar.config (pool)
   sudo_user: "{{ deploy_user }}"
   command: cp rebar_pool_{{ fyler_category }}.config rebar.config chdir={{ app_path }}
   when: (repo.changed or fyler_force_clean) and (fyler_role == "pool")
+  tags: fyler_release
 
 - name: Fyler | Create reltool.config
   sudo_user: "{{ deploy_user }}"
   template: src=reltool.config.j2 dest={{app_path}}/reltool.config
   register: reltool
+  tags: fyler_release
 
 - name: Fyler | Create vm.args
   sudo_user: "{{ deploy_user }}"
   template: src=vm.args.j2 dest={{app_path}}/files/vm.args
   register: vmargs
+  tags: fyler_release
 
 - name: Fyler | Create fyler config
   sudo_user: "{{ deploy_user }}"
   template: src=fyler.config.j2 dest={{app_path}}/apps/fyler/priv/fyler.config
   register: appconfig
+  tags: fyler_release
 
 - name: Fyler | Create app config
   sudo_user: "{{ deploy_user }}"
   template: src=app.config.j2 dest={{app_path}}/files/app.config
   register: main_appconfig
+  tags: fyler_release
 
 - name: Fyler | release exists?
   stat: path={{ fyler_bin_path}}/fyler
@@ -43,24 +49,15 @@
   when: fyler_force_clean or repo.changed or appconfig.changed or main_appconfig.changed or vmargs.changed or reltool.changed or (not release_bin.stat.exists)
   register: cleaned
 
-- name: Fyler | update deps
+- name: Fyler | update deps and compile
   sudo_user: "{{ deploy_user }}"
   environment: ffmpeg_env
-  command: make update_deps chdir={{ app_path }}
+  command: make {{ item }} chdir={{ app_path }}
   when: cleaned.changed
-  register: compiled
-
-- name: Fyler | update cowlib
-  sudo_user: "{{ deploy_user }}"
-  command: "{{ app_path }}/rebar update-deps apps=cowlib"
-  args:
-    chdir: "{{app_path}}"
-
-- name: Fyler | compile
-  sudo_user: "{{ deploy_user }}"
-  environment: ffmpeg_env
-  command: make compile chdir={{ app_path }}
-  when: cleaned.changed
+  with_items:
+    - get-deps
+    - update-deps
+    - compile
   register: compiled
 
 - name: Fyler | setup db
@@ -68,9 +65,14 @@
   command: make db_setup chdir={{ app_path }}
   when: compiled.changed and (fyler_role == "server")
 
+- name: Fyler | stop
+  service: name=fylerd state=stopped
+  when: fyler_force_release
+  tags: fyler_release
+
 - name: Fyler | release
   sudo_user: "{{ deploy_user }}"
   command: make soft-release chdir={{ app_path }}
-  when: compiled.changed or (not release_bin.stat.exists)
+  when: fyler_force_release or (compiled is defined and compiled.changed) or (release_bin is defined and (not release_bin.stat.exists))
   notify:
     - restart fyler
