@@ -13,9 +13,9 @@
     fyler_force_clean: false
   gather_facts: True
   roles:
-    - { role: common_setup, tags: ['initial'] }
-    - { role: deploy_user, tags: ['user'] }
-    - { role: postgres, tags: ['postgres'] }
-    - { role: erlang, tags: ['erlang'] }
-    - { role: aws_cli, tags: ['aws_cli'] }
+    - { role: 'palkan.common_setup', tags: ['common'] }
+    - { role: 'palkan.deploy_user', tags: ['user'] }
+    - { role: 'palkan.erlang', tags: ['erlang'] }
+    - { role: 'palkan.aws_cli', tags: ['aws_cli'] }
+    - { role: 'palkan.postgresql', tags: ['postgres'] }
     - { role: fyler_prepare, tags: ['app_setup'] }

@@ -20,3 +20,10 @@ Installs:
 * Vagrant >=1.4
 * VirtualBox >=4.0
 * [Ansible](http://docs.ansible.com/intro_installation.html) >=1.7
+* Galaxy roles: 
+    - palkan.common_setup
+    - palkan.deploy_user
+    - palkan.erlang
+    - palkan.aws_cli
+    - palkan.ffmpeg
+    - palkan.postgresql

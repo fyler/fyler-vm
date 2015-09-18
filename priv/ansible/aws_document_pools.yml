@@ -14,10 +14,10 @@
     fyler_force_clean: false
   gather_facts: True
   roles:
-    - { role: common_setup, tags: ['initial'] }
-    - { role: deploy_user, tags: ['user'] }
-    - { role: erlang, tags: ['erlang'] }
-    - { role: aws_cli, tags: ['aws_cli'] }
+    - { role: 'palkan.common_setup', tags: ['common'] }
+    - { role: 'palkan.deploy_user', tags: ['user'] }
+    - { role: 'palkan.erlang', tags: ['erlang'] }
+    - { role: 'palkan.aws_cli', tags: ['aws_cli'] }
     - { role: unoconv, tags: ['unoconv'] }
     - { role: swftools, tags: ['swftools'] }
     - { role: fyler_deps, tags: ['fyler_deps'] }
