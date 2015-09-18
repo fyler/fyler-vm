@@ -16,6 +16,11 @@ erlang_url: "http://www.erlang.org/download/otp_src_{{erlang_version}}.tar.gz"
 erlang_name: "otp_src_{{erlang_version}}"
 erlang_tmp_path: "/usr/local/src/{{erlang_name}}"
 
+# deploy user
+deploy_user: "vagrant"
+
+# aws_cli
+aws_config_user: "{{ deploy_user }}"
 
 db_ram_shared: 512
 db_ram_cache: 256
